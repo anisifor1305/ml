@@ -1,0 +1,9 @@
+{
+  "editor.inlineSuggest.enabled": false,
+  "editor.suggest.preview": false,
+  "github.copilot.enable": {
+    "*": false
+  },
+  "cloudcode.duetAI.enable": false,
+  "cloudcode.gemini.enable": false
+}

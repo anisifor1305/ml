@@ -2,7 +2,9 @@
 __pycache__/
 .pytest_cache/
 .DS_Store
+data/
 data/raw/*
 !data/raw/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
+.ruff_cache/
