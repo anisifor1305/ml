@@ -29,7 +29,7 @@ def test_experiment_config_valid():
     """Тест 1: Корректное создание конфигурации с дефолтными значениями."""
     cfg = ExperimentConfig(name="baseline_model")
     assert cfg.name == "baseline_model"
-    assert cfg.batch_size == 32
+    assert cfg.batch_size == 320000
     assert cfg.learning_rate == 0.001
     assert cfg.epochs == 10
     assert cfg.tags == []
