@@ -162,8 +162,6 @@ if __name__ == "__main__":
     opt_df, init_mb, fin_mb, ratio = task_4_memory_optimization(raw_df.copy())
     if opt_df is not None and ratio >= 3.0:
         print(f"\nЗадание 4 (Оптимизация памяти): ✅ Зачтено!")
-        print(
-            f"Было: {init_mb:.2f} МБ -> Стало: {fin_mb:.2f} МБ (Сжатие в {ratio:.1f} раз!)"
-        )
+        print(f"Было: {init_mb:.2f} МБ -> Стало: {fin_mb:.2f} МБ (Сжатие в {ratio:.1f} раз!)")
     elif opt_df is not None:
         print(f"\nЗадание 4: ⚠️ Сжатие составило {ratio:.1f}x (требуется >= 3.0x).")

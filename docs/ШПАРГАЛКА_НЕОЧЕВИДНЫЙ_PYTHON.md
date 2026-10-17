@@ -44,9 +44,9 @@ b = a.copy()
 ## Список: похожие операции делают разное
 
 ```python
-items.pop()      # удалить и вернуть последний элемент
-items.pop(0)     # удалить и вернуть первый; медленно на длинном списке
-del items[0]     # удалить первый, ничего не вернуть
+items.pop()  # удалить и вернуть последний элемент
+items.pop(0)  # удалить и вернуть первый; медленно на длинном списке
+del items[0]  # удалить первый, ничего не вернуть
 items.remove(x)  # удалить первое найденное значение x
 ```
 
@@ -88,10 +88,12 @@ config = {**base_config, "seed": 42}
 
 ```python
 from scripts import script_ready
+
 script_ready.notific()  # script_ready — файл-модуль
 
 from scripts.script_ready import notific
-notific()               # notific — сама функция
+
+notific()  # notific — сама функция
 ```
 
 ## Сортировка и поиск лучшего
@@ -140,6 +142,7 @@ def add_tag(tag, tags=None):
 ```python
 from dataclasses import dataclass, field
 
+
 @dataclass
 class Config:
     tags: list[str] = field(default_factory=list)
@@ -170,8 +173,7 @@ dataset = TableDataset(features, targets)
 ## Аннотации типов и Python 3.9
 
 ```python
-def __getitem__(self, index: int) -> tuple[list[float], int]:
-    ...
+def __getitem__(self, index: int) -> tuple[list[float], int]: ...
 ```
 
 Аннотация описывает то, что реально возвращается. Если метод отдаёт `([1.0, 2.0], 0)`, это `tuple[list[float], int]`, а не «два списка».
@@ -214,8 +216,10 @@ class StreamRange:
         self.current = start
         self.stop = stop
         self.step = step
+
     def __iter__(self):
         return self
+
     def __next__(self):
         if self.current >= self.stop:
             raise StopIteration
@@ -277,11 +281,12 @@ print(label1 == label2)  # False! Классы разойдутся!
 from contextlib import contextmanager
 import tracemalloc
 
+
 @contextmanager
 def track_memory(name: str):
     tracemalloc.start()  # аналог __enter__
     try:
-        yield            # пауза: выполняется блок with
+        yield  # пауза: выполняется блок with
     finally:
         # аналог __exit__: сработает ВСЕГДА
         current, peak = tracemalloc.get_traced_memory()
@@ -366,7 +371,7 @@ NumPy позволяет делать операции над массивами
 # A[:, np.newaxis, :] имеет форму (N, 1, D)
 # B[np.newaxis, :, :] имеет форму (1, M, D)
 diff = A[:, np.newaxis, :] - B[np.newaxis, :, :]  # (N, M, D)
-dists = np.sqrt(np.sum(diff**2, axis=-1))          # (N, M)
+dists = np.sqrt(np.sum(diff**2, axis=-1))  # (N, M)
 ```
 Даёт ускорение в 50–100 раз по сравнению с двойным циклом `for`.
 
@@ -447,28 +452,28 @@ normal = rng.normal(loc=0.0, scale=1.0, size=(1000,))
 
 ```python
 # ПРАВИЛЬНО:
-df[(df['city'] == 'Москва') & (df['age'] < 30)]
+df[(df["city"] == "Москва") & (df["age"] < 30)]
 
 # ОШИБКА TypeError (Python пытается вычислить 'Москва' & df['age']):
-df[df['city'] == 'Москва' & df['age'] < 30]
+df[df["city"] == "Москва" & df["age"] < 30]
 ```
 
 ## `SettingWithCopyWarning`: главная ловушка модификации
 
 ```python
 # АНТИПАТТЕРН (Chained Indexing):
-df[df['age'] > 25]['salary'] += 5000  # Вылетит предупреждение, в df данные могут НЕ измениться!
+df[df["age"] > 25]["salary"] += 5000  # Вылетит предупреждение, в df данные могут НЕ измениться!
 ```
 
 ### Как делать правильно:
 1. **Если нужен отдельный датафрейм:** явно вызывай `.copy()`:
    ```python
-   seniors = df[df['age'] > 25].copy()
-   seniors['bonus'] = 5000
+   seniors = df[df["age"] > 25].copy()
+   seniors["bonus"] = 5000
    ```
 2. **Если нужно изменить данные прямо в исходном `df`:** всегда используй `.loc`:
    ```python
-   df.loc[df['age'] > 25, 'salary'] += 5000
+   df.loc[df["age"] > 25, "salary"] += 5000
    ```
 
 ## Оптимизация памяти (Downcasting и `category`)
@@ -477,13 +482,13 @@ df[df['age'] > 25]['salary'] += 5000  # Вылетит предупрежден�
 
 * **Тип `category`:** повторяющиеся строки (города, устройства, статусы) кодируются 8-битными числами со словарем. Сжимает память текстовых колонок в 10–80 раз:
   ```python
-  df['city'] = df['city'].astype('category')
+  df["city"] = df["city"].astype("category")
   ```
 * **Downcasting чисел:** перевод избыточных `int64` и `float64` в меньшие типы:
   ```python
-  df['age'] = df['age'].astype('int8')       # возраст от -128 до 127
-  df['user_id'] = df['user_id'].astype('int32')
-  df['spend'] = df['spend'].astype('float32') # 4 байта вместо 8
+  df["age"] = df["age"].astype("int8")  # возраст от -128 до 127
+  df["user_id"] = df["user_id"].astype("int32")
+  df["spend"] = df["spend"].astype("float32")  # 4 байта вместо 8
   ```
   Это уменьшает потребление памяти датафреймом в 3–15 раз.
 
@@ -521,11 +526,11 @@ df_ml = pd.read_parquet("by_department/", filters=[("dept", "==", "ML")])
 ### Сводка конструкторов:
 ```python
 # 1. NumPy:
-np.zeros((3, 4), dtype=np.float32)       # матрица нулей (shape)
-np.ones((5, 3))                          # матрица единиц
-np.arange(10, 31, 2)                     # диапазон с шагом (stop не включается)
-np.linspace(0.0, 1.0, 5)                 # N точек от start до stop (stop включается)
-np.eye(4, dtype=np.float32)              # единичная диагональная матрица 4x4
+np.zeros((3, 4), dtype=np.float32)  # матрица нулей (shape)
+np.ones((5, 3))  # матрица единиц
+np.arange(10, 31, 2)  # диапазон с шагом (stop не включается)
+np.linspace(0.0, 1.0, 5)  # N точек от start до stop (stop включается)
+np.eye(4, dtype=np.float32)  # единичная диагональная матрица 4x4
 rng.normal(loc=0.0, scale=1.0, size=(N, D))  # случайный гауссов шум (size)
 
 # 2. pandas:

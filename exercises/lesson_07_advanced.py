@@ -170,12 +170,8 @@ def run_all_checks():
     mentors, df_mod = task_2_safe_modification(df_for_task2)
     if mentors is not None and "mentor_bonus" in mentors.columns and df_mod is not None:
         high_proj_mask = df_raw["projects_completed"] > 25
-        salary_diff = (
-            df_mod.loc[high_proj_mask, "salary"] - df_raw.loc[high_proj_mask, "salary"]
-        )
-        assert np.allclose(salary_diff, 50_000.0, atol=1.0), (
-            "Зарплата увеличена не на 50 000!"
-        )
+        salary_diff = df_mod.loc[high_proj_mask, "salary"] - df_raw.loc[high_proj_mask, "salary"]
+        assert np.allclose(salary_diff, 50_000.0, atol=1.0), "Зарплата увеличена не на 50 000!"
         print(f"\nЗадание 2 (Безопасная модификация): ✅ Зачтено!")
         print(f" - Менторов выделено: {len(mentors):,}")
         print(f" - Зарплаты успешно повышены сотрудникам с >25 проектов.")
@@ -211,9 +207,7 @@ def run_all_checks():
 
         # Проверка 3.3
         if df_ml is not None:
-            assert (df_ml["dept"] == "ML").all(), (
-                "3.3: В датафрейм попали не только из ML!"
-            )
+            assert (df_ml["dept"] == "ML").all(), "3.3: В датафрейм попали не только из ML!"
             assert len(df_ml) > 0, "3.3: Датафрейм пустой!"
             part_dirs = os.listdir(os.path.join(data_dir, "by_department"))
             print(

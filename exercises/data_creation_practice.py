@@ -12,9 +12,7 @@ import pandas as pd
 # =====================================================================
 # Часть 1. Создание массивов NumPy
 # =====================================================================
-def task_1_numpy_creation() -> tuple[
-    np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray
-]:
+def task_1_numpy_creation() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Создай следующие 5 массивов:
 
@@ -57,9 +55,7 @@ def task_1_numpy_creation() -> tuple[
 # =====================================================================
 # Часть 2. Создание pandas Series и DataFrame
 # =====================================================================
-def task_2_pandas_creation() -> tuple[
-    pd.Series, pd.DataFrame, pd.DataFrame, pd.DataFrame
-]:
+def task_2_pandas_creation() -> tuple[pd.Series, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """
     Создай следующие 4 объекта pandas:
 
@@ -133,9 +129,7 @@ def run_checks():
 
     np_success = True
     if zeros is not None:
-        assert zeros.shape == (3, 4), (
-            f"arr_zeros форма должна быть (3, 4), получена {zeros.shape}"
-        )
+        assert zeros.shape == (3, 4), f"arr_zeros форма должна быть (3, 4), получена {zeros.shape}"
         assert zeros.dtype == np.float32, (
             f"arr_zeros dtype должен быть float32, получен {zeros.dtype}"
         )
@@ -153,18 +147,14 @@ def run_checks():
         np_success = False
 
     if linsp is not None:
-        assert len(linsp) == 5, (
-            f"arr_linspace должен содержать 5 чисел, получено {len(linsp)}"
-        )
+        assert len(linsp) == 5, f"arr_linspace должен содержать 5 чисел, получено {len(linsp)}"
         assert np.allclose(linsp, [0.0, 0.25, 0.5, 0.75, 1.0]), "arr_linspace неверен"
         print("1.3 np.linspace:        ✅ Зачтено!")
     else:
         np_success = False
 
     if eye is not None:
-        assert eye.shape == (4, 4), (
-            f"arr_identity форма должна быть (4, 4), получена {eye.shape}"
-        )
+        assert eye.shape == (4, 4), f"arr_identity форма должна быть (4, 4), получена {eye.shape}"
         assert eye.dtype == np.float32, (
             f"arr_identity dtype должен быть float32, получен {eye.dtype}"
         )
@@ -195,18 +185,14 @@ def run_checks():
         assert list(s_u.index) == ["Alice", "Bob", "Charlie"], (
             f"Неверный индекс у s_users: {list(s_u.index)}"
         )
-        assert s_u.name == "salary", (
-            f"Имя Series должно быть 'salary', получено {s_u.name}"
-        )
+        assert s_u.name == "salary", f"Имя Series должно быть 'salary', получено {s_u.name}"
         assert s_u["Alice"] == 150_000, "Значения зарплат неверны"
         print("\n2.1 pd.Series:          ✅ Зачтено!")
     else:
         pd_success = False
 
     if df_dict is not None:
-        assert isinstance(df_dict, pd.DataFrame), (
-            "df_from_dict должен быть pd.DataFrame"
-        )
+        assert isinstance(df_dict, pd.DataFrame), "df_from_dict должен быть pd.DataFrame"
         assert list(df_dict.columns) == ["model", "params_millions", "is_llm"], (
             "Неверные колонки в df_from_dict"
         )
@@ -216,9 +202,7 @@ def run_checks():
         pd_success = False
 
     if df_rec is not None:
-        assert isinstance(df_rec, pd.DataFrame), (
-            "df_from_records должен быть pd.DataFrame"
-        )
+        assert isinstance(df_rec, pd.DataFrame), "df_from_records должен быть pd.DataFrame"
         assert list(df_rec.columns) == ["order_id", "item", "price"], (
             "Неверные колонки в df_from_records"
         )
@@ -232,9 +216,7 @@ def run_checks():
         assert df_np.shape == (5, 3), (
             f"Форма df_from_numpy должна быть (5, 3), получена {df_np.shape}"
         )
-        assert list(df_np.columns) == ["feature_1", "feature_2", "feature_3"], (
-            "Неверные колонки"
-        )
+        assert list(df_np.columns) == ["feature_1", "feature_2", "feature_3"], "Неверные колонки"
         assert df_np.index[0] == "sample_1", "Неверный индекс строк"
         assert np.all(df_np.values == 1.0), "Значения должны быть единицами"
         print("2.4 DataFrame из NumPy: ✅ Зачтено!")
