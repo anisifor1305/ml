@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: lesson10
+      POSTGRES_PASSWORD: lesson10_local_only
+      POSTGRES_DB: lesson10
+    ports:
+      - "127.0.0.1:55410:5432"
+    volumes:
+      - lesson10_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lesson10 -d lesson10"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  lesson10_data:

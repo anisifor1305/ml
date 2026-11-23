@@ -9,3 +9,15 @@ data/processed/*
 !data/processed/.gitkeep
 .ruff_cache/
 *.egg-info/
+# Учебный датасет занятия 09; результаты графиков не коммитим.
+!exercises/data/
+exercises/data/*
+!exercises/data/lesson_09_customers.csv
+exercises/outputs/
+tmp_visuals/
+
+# Изолированный локальный PostgreSQL занятия 10.
+.lesson10_pg/
+
+# Фиксированные учебные данные занятия 12.
+!exercises/data/lesson_12/
