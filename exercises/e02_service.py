@@ -8,12 +8,17 @@
 Готовая модель загружается один раз при создании приложения и работает на CPU.
 """
 
+import logging
+from contextlib import asynccontextmanager
 from typing import Literal
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from mldata.e02_model import load_classifier
+
+logging.basicConfig(level=logging.INFO)
+LOGGER = logging.getLogger(__name__)
 
 
 class TextRequest(BaseModel):
@@ -29,8 +34,23 @@ class PredictResponse(BaseModel):
     score: float = Field(le=1, ge=0)
 
 
-app = FastAPI(title="E02: учебный AI API")
-classifier = load_classifier()
+@asynccontextmanager
+async def lifespan(app):
+    try:
+        LOGGER.info("попытка загрузки")
+        try:
+            app.state.classifier = load_classifier()
+            LOGGER.info("загрузилось все")
+        except Exception:
+            LOGGER.exception("ошибка загрузки")
+            raise
+        yield
+    finally:
+        LOGGER.info("выгрузилось все")
+        app.state.classifier = None
+
+
+app = FastAPI(title="E02: учебный AI API", lifespan=lifespan)
 
 
 @app.get("/health")
@@ -45,7 +65,11 @@ def get_length(request: TextRequest):
 
 @app.post("/predict", response_model=PredictResponse)
 def get_predict(request: TextRequest):
-    return classifier(request.text, truncation=True, max_length=512)[0]
+    try:
+        return app.state.classifier(request.text, truncation=True, max_length=512)[0]
+    except RuntimeError:
+        LOGGER.exception("Ошибка выполнения модели")
+        raise HTTPException(status_code=500, detail="Ошибка выполнения модели")
 
 
 if __name__ == "__main__":

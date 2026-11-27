@@ -1,0 +1,2 @@
+session,date,platform,gpu,gpu_count,operation_seconds,session_hours,gpu_hours,cost,currency,notes
+E02,2026-11-23,Colab,Tesla T4,1,0.0003914599999461643,,,,,"Длительность сессии и фактическая стоимость неизвестны; операция — сумма квадратов массива 2048x2048, seed=42"

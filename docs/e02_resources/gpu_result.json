@@ -1,0 +1,10 @@
+{
+  "gpu": "Tesla T4",
+  "seed": 42,
+  "shape": [
+    2048,
+    2048
+  ],
+  "sum_of_squares": 4192397.5,
+  "elapsed_seconds": 0.0003914599999461643
+}

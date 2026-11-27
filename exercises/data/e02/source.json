@@ -1,0 +1,9 @@
+{
+  "url": "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/taxis.csv",
+  "sha256": "08d6d71784dbaa2651fee37fc03389754194c05d72d2d19cbc2c799dea6ac09d",
+  "source_rows": 6433,
+  "trip_selection": "first 300 source rows, trip_id=1-based source row",
+  "trips": 300,
+  "zones": 213,
+  "zone_derivation": "distinct zone/borough pairs from both pickup and dropoff of full source; alphabetical zone_id"
+}
